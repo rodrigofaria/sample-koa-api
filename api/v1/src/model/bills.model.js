@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose")
+const { Schema } = require('mongoose')
 const mongoose = require('../db/mongoose.service')
 
 const billSchema = new Schema(
@@ -7,7 +7,7 @@ const billSchema = new Schema(
     category: String,
     description: String,
     dueDate: Date
-  }, 
+  },
   {
     versionKey: false
   }
@@ -15,6 +15,7 @@ const billSchema = new Schema(
 
 billSchema.set('toObject', {
   transform: (doc, ret) => {
+    console.debug(doc)
     ret.id = ret._id
     delete ret._id
     delete ret.__v
