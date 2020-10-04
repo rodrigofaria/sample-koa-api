@@ -11,14 +11,29 @@ const createBill = async (ctx) => {
   ctx.body = await bill.save()
 }
 
-const updateBill = ctx => {
-  ctx.body = 'Will be implemented'
-  console.log('[PUT] Will be implemented')
+const updateBill = async ctx => {
+  const bill = await Bill.findByIdAndUpdate(ctx.params.id, {
+    $set: {
+      value: ctx.request.body.value,
+      category: ctx.request.body.category,
+      description: ctx.request.body.description,
+      dueDate: ctx.request.body.dueDate
+    }
+  })
+
+  if (!bill) {
+    ctx.throw(404)
+  }
+
+  ctx.body = await Bill.findById(ctx.params.id)
 }
 
-const deleteBill = ctx => {
-  ctx.body = 'Will be implemented'
-  console.log('[DELETE] Will be implemented')
+const deleteBill = async (ctx) => {
+  const bill = await Bill.findByIdAndRemove(ctx.params.id)
+  if (!bill) {
+    ctx.throw(404)
+  }
+  ctx.body = bill
 }
 
 module.exports = {
